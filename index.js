@@ -23,12 +23,3 @@ app.get("/", (req, res) => {
   app.get("/about", (req, res) => {
     res.render("about");
   });
-  
-  // GET /data
-  app.get("/data", (req, res) => {
-    const test = {
-      titre: "Test",
-      items: ["un", "deux", "trois"]
-    };
-    res.render("data", { model: test });
-  });
