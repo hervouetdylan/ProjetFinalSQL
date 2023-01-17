@@ -1,21 +1,30 @@
-CREATE TABLE employees (
-    employeesId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    Nom VARCHAR(25) NOT NULL,
-    Prénom VARCHAR(25) NOT NULL,
-    Adresse VARCHAR(25) NOT NULL,
-    NuméroDeSécuritésSociale VARCHAR(10) NOT NULL,
-    DateEmbauche DATE NOT NULL,
-    PosteOccupée VARCHAR(50) NOT NULL,
-    Départements VARCHAR(50) NOT NULL,
-    SalaireDeBase INTEGER NOT NULL,
-    HeuresSupplémentaire INTEGER NOT NULL,
-    AvantagesSociaux VARCHAR(100) NOT NULL,
-    RetenuesImpôts INTEGER NOT NULL,
-    HeuresTravaillées INTEGER NOT NULL,
-    CongésPris INTEGER NOT NULL,
-    Absences INTEGER NOT NULL,
-    CoursSuivi VARCHAR(100) NOT NULL,
-    CertificationsObtenues VARCHAR(100) NOT NULL,
-    ObjectifsDePerformance VARCHAR(100) NOT NULL,
-    CommentairesGestionnaires VARCHAR(100) NOT NULL,
+CREATE TABLE Employes (
+    idEmploye INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    Nom VARCHAR 25 NOT NULL,
+    Prénom VARCHAR 25 NOT NULL,
+    Adresse VARCHAR 25 NOT NULL,
+    NumeroSecuSociale VARCHAR 10 NOT NULL,
+    Diplome VARCHAR 100 NOT NULL,
+    idPoste INTEGER NOT NULL,
+)
+
+CREATE TABLE Contrat(
+    idEmploye INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    PosteCoccupe VARCHAR 100 NOT NULL,
+    Salaire INTEGER NOT NULL,
+    Impot INTEGER NOT NULL,
+    HeureTravaille INTEGER NOT NULL,
+    CongesPris INTEGER NOT NULL,
+    Absence INTEGER NOT NULL,
+)
+
+CREATE TABLE Poste(
+    idPoste INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    Label VARCHAR 100 NOT NULL,
+    idDepartement INTEGER NOT NULL,
+)
+
+CREATE TABLE Departement(
+    idDepartement INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    Label VARCHAR 50 NOT NULL,
 )
