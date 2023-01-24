@@ -8,10 +8,12 @@ app.set("view engine", "ejs");
 
 app.set("views", path.join(__dirname + "/views"));
 
+app.use(express.static(path.join(__dirname, '/public')))
 
 
-app.listen(3000, () => {
-    console.log("Serveur démarré (http://localhost:3000/) !");
+
+app.listen(8080, () => {
+    console.log("Serveur démarré (http://localhost:8080/) !");
 });
 
 // GET /
@@ -24,6 +26,7 @@ app.get("/", (req, res) => {
   app.get("/about", (req, res) => {
     res.render("about");
   });
+<<<<<<< HEAD
   
   // GET /data
   app.get("/data", (req, res) => {
@@ -33,3 +36,5 @@ app.get("/", (req, res) => {
     };
     res.render("data", { model: test });
   });
+=======
+>>>>>>> 410ec8c8d959406a50d245754b26dd73939c96e5
