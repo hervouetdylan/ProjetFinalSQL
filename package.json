@@ -1,9 +1,11 @@
 {
   "name": "projetfinalsql",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node index.js",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -17,7 +19,8 @@
   },
   "homepage": "https://github.com/hervouetdylan/ProjetFinalSQL#readme",
   "dependencies": {
-    "express": "^4.18.2"
-  },
-  "description": ""
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "sqlite3": "^5.1.4"
+  }
 }
