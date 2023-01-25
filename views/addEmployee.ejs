@@ -1,0 +1,70 @@
+<%- include("_header") -%>
+<div class="formulaire">
+    <form>
+        <div class="Nom">
+            <label for="name">Nom</label>
+            <input type="text" name="nom" placeholder="Nom">
+        </div>
+        <div class="Prenom">
+            <label for="name">Prénom</label>
+            <input type="text" name="prenom" placeholder="Prénom">
+        </div>
+        <div class="adresse">
+            <label for="adresse">Adresse</label>
+            <input type="text" name="adresse" placeholder="Adresse">
+        </div>
+        <div class="Departement">
+            <label for="Departement">Département</label>
+            <input type="text" name="Departement" placeholder="Département">
+        </div>
+        <div class="NumSecuSocial">
+            <label for="NumSecuSocial">Numéro de sécurité sociale</label>
+            <input type="text" name="NumSecuSocial" placeholder="Numéro de sécurité sociale">
+        </div>
+        <div class="Diplome">
+            <label for="Diplome">Diplôme</label>
+            <input type="text" name="Diplome" placeholder="Diplôme">
+        </div>
+        <div class="PostOccupee">
+            <label for="PostOccupee">Poste Ocupée</label>
+            <input type="text" name="PostOccupee" placeholder="Poste Ocupée">
+        </div>
+        <div class="Salaire">
+            <label for="Salaire">Salaire</label>
+            <input type="text" name="Salaire" placeholder="Salaire">
+        </div>
+        <div class="impot">
+            <label for="impot">Impôt</label>
+            <input type="text" name="impot" placeholder="Impôt">
+        </div>
+        <div class="HeureTravailler">
+            <label for="HeureTravailler">Heure Travailler</label>
+            <input type="text" name="HeureTravailler" placeholder="Heures Travailler">
+        </div>
+        <div class="CongePris">
+            <label for="CongePris">Congé Pris</label>
+            <input type="text" name="CongePris" placeholder="Congé Pris">
+        </div>
+        <div class="Absence">
+            <label for="Absence">Absence</label>
+            <input type="text" name="Absence" placeholder="Absence">
+        </div>
+        <div class="Ajouter">
+            <button type="submit">Ajouter</button>
+        </div>
+    </form>
+</div>
+
+<?php 
+    if (isset($_POST['Nom'])) {
+        $mysqli = new mysqli("localhost", "root", "", "essai");
+        $mysqli->set_charset("utf8");
+        $requete = "INSERT INTO Employee VALUES(NULL, '" . $_POST['Nom'] . "', '" . $_POST['Prénom'] . "', '" . $_POST['Adresse'] . "', '" . $_POST['NumSecuSocial'] . "', '" . $_POST['Diplome'] . "')";
+        $resultat = $mysqli->query($requete);
+        if ($resultat)
+            echo "<p>Le contact a été ajouté</p>";
+        else
+            echo "<p>Erreur</p>";
+    }
+?>
+<%- include("_footer") -%>
