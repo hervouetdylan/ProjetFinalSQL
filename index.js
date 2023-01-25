@@ -1,8 +1,7 @@
 const express = require("express");
 const path = require("path");
-const app = express()
 
-const port = 3000
+const app = express();
 
 app.set("view engine", "ejs");
 
@@ -26,15 +25,3 @@ app.get("/", (req, res) => {
   app.get("/about", (req, res) => {
     res.render("about");
   });
-<<<<<<< HEAD
-  
-  // GET /data
-  app.get("/data", (req, res) => {
-    const test = {
-      titre: "Test",
-      items: ["un", "deux", "trois"]
-    };
-    res.render("data", { model: test });
-  });
-=======
->>>>>>> 410ec8c8d959406a50d245754b26dd73939c96e5
