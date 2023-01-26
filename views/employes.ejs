@@ -1,0 +1,39 @@
+<%- include("_header") -%>
+
+<h1>Liste des Employés (<%= model.length %>)</h1>
+
+<div class="table-responsive-sm">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Prenom</th>
+        <th>Adresse</th>
+        <th>NumeroSecuSociale</th>
+        <th>idPoste</th>
+        <th class="d-print-none">
+          <a class="btn btn-sm btn-success" href="/create">Ajouter</a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (const employe of model) { %>
+        <tr>
+          <td><%= employe.idEmploye %></td>
+          <td><%= employe.Nom %></td>
+          <td><%= employe.Prenom %></td>
+          <td><%= employe.Adresse %></td>
+          <td><%= employe.NumeroSecuSociale %></td>
+          <td><%= employe.idPoste %></td>
+          <td class="d-print-none">
+            <a class="btn btn-sm btn-warning" href="/edit/<%= employe.idEmploye %>">Modifier</a>
+            <a class="btn btn-sm btn-danger" href="/delete/<%= employe.idEmploye %>">Effacer</a>
+          </td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+
+<%- include("_footer") -%>
