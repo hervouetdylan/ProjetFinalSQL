@@ -22,6 +22,6 @@ app.get("/", (req, res) => {
   });
   
   // GET /about
-  app.get("/about", (req, res) => {
-    res.render("about");
+  app.get("/AddEmployee", (req, res) => {
+    res.render("AddEmployee");
   });

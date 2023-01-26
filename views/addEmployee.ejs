@@ -13,10 +13,6 @@
             <label for="adresse">Adresse</label>
             <input type="text" name="adresse" placeholder="Adresse">
         </div>
-        <div class="Departement">
-            <label for="Departement">Département</label>
-            <input type="text" name="Departement" placeholder="Département">
-        </div>
         <div class="NumSecuSocial">
             <label for="NumSecuSocial">Numéro de sécurité sociale</label>
             <input type="text" name="NumSecuSocial" placeholder="Numéro de sécurité sociale">
@@ -56,15 +52,24 @@
 </div>
 
 <?php 
-    if (isset($_POST['Nom'])) {
-        $mysqli = new mysqli("localhost", "root", "", "essai");
-        $mysqli->set_charset("utf8");
-        $requete = "INSERT INTO Employee VALUES(NULL, '" . $_POST['Nom'] . "', '" . $_POST['Prénom'] . "', '" . $_POST['Adresse'] . "', '" . $_POST['NumSecuSocial'] . "', '" . $_POST['Diplome'] . "')";
-        $resultat = $mysqli->query($requete);
-        if ($resultat)
-            echo "<p>Le contact a été ajouté</p>";
-        else
-            echo "<p>Erreur</p>";
+//recupération des infos
+    $nom = $_REQUEST['nom'];
+    $prenom = $_REQUEST['prenom'];
+    $adresse = $_REQUEST['adresse'];
+    $NumSecuSocial = $_REQUEST['NumSecuSocial'];
+
+    //Connexion à la BD
+    $conn = mysqli_connect('localhost','dylan','test123','ecole');
+
+    //La réquête
+    $req = "insert into Employes (nom,prenom,adresse,NumSecuSocial) values('$nom','$prenom','$adresse','$NumSecuSocial')";
+
+    $resultat = mysqli_query($conn,$req);
+    //Pour se rassurer si la requête est bien exécutée
+    if($resultat == TRUE){
+            echo "Insertion réussie";
+    }else{
+            echo "Erreur d'insertion";
     }
 ?>
 <%- include("_footer") -%>
