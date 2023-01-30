@@ -2,8 +2,12 @@ const express = require("express");
 const path = require("path");
 const sqlite3 = require("sqlite3").verbose();
 
+const avatarLink = "https://api.dicebear.com/5.x/lorelei/svg?seed="
+
 // Création du serveur Express
 const app = express();
+
+
 
 // Configuration du serveur
 app.set("view engine", "ejs");
@@ -20,22 +24,177 @@ const db = new sqlite3.Database(db_name, err => {
     console.log("Connexion réussie à la base de données 'data.db'");
 });
 
-// Création de la table Employes 
-const sql_create = `CREATE TABLE IF NOT EXISTS Employes (
-    idEmploye INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    Nom VARCHAR(25) NOT NULL,
-    Prénom VARCHAR(25) NOT NULL,
-    Adresse VARCHAR(25) NOT NULL,
-    NumeroSecuSociale VARCHAR(10) NOT NULL,
-    Diplome VARCHAR(100) NOT NULL,
-    idPoste INTEGER NOT NULL
+
+const sql_create = `CREATE TABLE IF NOT EXISTS Departement (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    label VARCHAR(100) UNIQUE NOT NULL
 );`;
 
 db.run(sql_create, err => {
     if (err) {
         return console.error(err.message);
     }
+    console.log("Création réussie de la table 'Departement'");
+
+    // Alimentation de la table
+    const sql_insert = `insert into Departement (label)
+                    values
+                        ('Food Chemist'),
+                        ('Systems Administrator IV'),
+                        ('Web Developer III'),
+                        ('Account Representative I'),
+                        ('Librarian'),
+                        ('Assistant Manager'),
+                        ('Financial Analyst'),
+                        ('Occupational Therapist'),
+                        ('Associate Professor'),
+                        ('Administrative Officer'),
+                        ('Geologist IV'),
+                        ('Staff Scientist'),
+                        ('Executive Secretary'),
+                        ('Teacher'),
+                        ('Payment Adjustment Coordinator'),
+                        ('Sales Associate'),
+                        ('Engineer I'),
+                        ('Geologist III'),
+                        ('Account Executive'),
+                        ('Developer III'),
+                        ('Health Coach II'),
+                        ('Registered Nurse'),
+                        ('Physical Therapy Assistant'),
+                        ('Help Desk Technician'),
+                        ('Mechanical Systems Engineer')`
+
+    // db.run(sql_insert, err => {
+    //     if (err) {
+    //         return console.error(err.message);
+    //     }
+    //     console.log("Alimentation réussie de la table 'Departement'");
+    // });
+});
+
+
+
+const sql_create2 = `CREATE TABLE IF NOT EXISTS Poste (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    label VARCHAR(100) NOT NULL,
+    idDepartement INTEGER NOT NULL,
+    FOREIGN KEY (idDepartement) REFERENCES Departement(id)
+);`;
+
+db.run(sql_create2, err => {
+    if (err) {
+        return console.error(err.message);
+    }
+    console.log("Création réussie de la table 'Poste'");
+
+
+    // Alimentation de la table
+    const sql_insert = `insert into
+                            Poste (label, idDepartement)
+                        values
+                            ('Data Coordiator', 21),
+                            ('Assistant Manager', 5),
+                            ('Structural Engineer', 1),
+                            ('Account Representative IV', 25),
+                            ('VP Accounting', 12),
+                            ('Environmental Tech', 13),
+                            ('Computer Systems Analyst III', 2),
+                            ('Help Desk Technician', 6),
+                            ('Editor', 9),
+                            ('Budget/Accounting Analyst II', 2),
+                            ('VP Product Management', 2),
+                            ('Community Outreach Specialist', 8),
+                            ('Help Desk Operator', 4),
+                            ('Nurse', 4),
+                            ('Structural Analysis Engineer', 6),
+                            ('Nurse Practicioner', 11),
+                            ('Assistant Media Planner', 9),
+                            ('Business Systems Development Analyst', 8),
+                            ('VP Quality Control', 19),
+                            ('Computer Systems Analyst II', 7),
+                            ('Automation Specialist IV', 5),
+                            ('Research Nurse', 5),
+                            ('Software Consultant', 9),
+                            ('Office Assistant III', 3),
+                            ('Marketing Manager', 7),
+                            ('Analyst Programmer', 18),
+                            ('Professor', 19),
+                            ('Quality Engineer', 6),
+                            ('Geologist III', 5),
+                            ('Senior Editor', 4),
+                            ('Paralegal', 18),
+                            ('Research Associate', 6),
+                            ('Account Executive', 2),
+                            ('Product Engineer', 13),
+                            ('Financial Analyst', 3),
+                            ('Web Designer IV', 13),
+                            ('Associate Professor', 3),
+                            ('Occupational Therapist', 6),
+                            ('Staff Accountant II', 9),
+                            ('Electrical Engineer', 8),
+                            ('Programmer Analyst III', 9),
+                            ('Safety Technician IV', 10),
+                            ('Chemical Engineer', 9),
+                            ('Technical Writer', 9),
+                            ('Internal Auditor', 16),
+                            ('Mechanical Systems Engineer', 3),
+                            ('Programmer III', 23),
+                            ('Senior Financial Analyst', 11),
+                            ('Assistant Professor', 9),
+                            ('Account Coordinator', 9),
+                            ('Biostatistician I', 6),
+                            ('Sales Representative', 1),
+                            ('GIS Technical Architect', 7),
+                            ('Dental Hygienist', 11),
+                            ('Food Chemist', 22),
+                            ('Financial Advisor', 5),
+                            ('Analog Circuit Design manager', 3),
+                            ('Quality Control Specialist', 9),
+                            ('Administrative Officer', 14),
+                            ('Geological Engineer', 9),
+                            ('Director of Sales', 6),
+                            ('General Manager', 8),
+                            ('Speech Pathologist', 7),
+                            ('Web Designer II', 5),
+                            ('Sales Associate', 2),
+                            ('Systems Administrator I', 9),
+                            ('Senior Sales Associate', 9),
+                            ('Information Systems Manager', 3),
+                            ('Marketing Assistant', 4),
+                            ('Media Manager III', 4),
+                            ('Programmer Analyst IV', 3),
+                            ('Junior Executive', 4),
+                            ('Developer II', 3),
+                            ('Senior Developer', 6)`;
+
+    // db.run(sql_insert, err => {
+    //     if (err) {
+    //         return console.error(err.message);
+    //     }
+    //     console.log("Alimentation réussie de la table 'Poste'");
+    // });
+});
+
+// Création de la table Employes 
+const sql_create3 = `CREATE TABLE IF NOT EXISTS Employes (
+    idEmploye INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    Nom VARCHAR(25) NOT NULL,
+    Prénom VARCHAR(25) NOT NULL,
+    Adresse VARCHAR(25) NOT NULL,
+    NumeroSecuSociale VARCHAR(10) NOT NULL,
+    Diplome VARCHAR(100) NOT NULL,
+    idPoste INTEGER NOT NULL,
+    FOREIGN KEY (idPoste) REFERENCES Postes(idPoste)
+);`;
+
+db.run(sql_create3, err => {
+    if (err) {
+        return console.error(err.message);
+    }
     console.log("Création réussie de la table 'Employes'");
+
+
     // Alimentation de la table
     const sql_insert = `
     insert into employes (Nom, Prénom, Adresse, NumeroSecuSociale, Diplome, idPoste) values ('Larmet', 'Theresa', '30705 Debra Avenue', '9 97 18 861 36 80', 'Phasellus in felis.', 61),
@@ -147,6 +306,8 @@ db.run(sql_create, err => {
     // });
 });
 
+
+
 // Démarrage du serveur
 app.listen(3000, () => {
     console.log("Serveur démarré (http://localhost:3000/) !");
@@ -173,12 +334,24 @@ app.get("/data", (req, res) => {
 
 // GET /employes
 app.get("/employes", (req, res) => {
-    const sql = "SELECT * FROM Employes ORDER BY idEmploye";
-    db.all(sql, [], (err, rows) => {
+    const search = req.query.search || "";
+    const sql = `SELECT COUNT(*) AS Total FROM employes Where Nom LIKE '%${search}%' OR Prénom LIKE '%${search}%'`;
+    db.get(sql, [], (err, row) => {
         if (err) {
             return console.error(err.message);
         }
-        res.render("employes", { model: rows });
+        const limit = req.query.limit || 5;
+        var offset = req.query.offset || 0;
+        if (offset >= row.Total) {
+            offset = row.Total - limit;
+        }
+        const sql = `SELECT '${avatarLink}' || Prénom AS Avatar, Nom, Prénom, Adresse, NumeroSecuSociale, Diplome FROM employes Where Nom LIKE '%${search}%' OR Prénom LIKE '%${search}%' ORDER BY idEmploye LIMIT ${limit} OFFSET ${offset}`;
+        db.all(sql, [], (err, rows) => {
+            if (err) {
+                return console.error(err.message);
+            }
+            res.render("employes", { model: rows, limit: limit, offset: offset, all: row.Total, search: search });
+        });
     });
 });
 
@@ -189,9 +362,9 @@ app.get("/create", (req, res) => {
 
 // POST /create
 app.post("/create", (req, res) => {
-    const sql = "INSERT INTO employes (Nom, Prénom, Adresse, NumeroSecuSociale, Diplome, idPoste) VALUES (?,?,?,?,?,?)";
-    const book = [req.body.Nom, req.body.Prenom, req.body.Adresse, req.body.NumeroSecuSociale, req.body.Diplome, 20];
-    db.run(sql, book, err => {
+    const sql = "INSERT INTO employes (Nom, Prénom, Adresse, NumeroSecuSociale, Diplome, idPoste, avatarLink) VALUES (?,?,?,?,?,?,?)";
+    const employe = [req.body.Nom, req.body.Prenom, req.body.Adresse, req.body.NumeroSecuSociale, req.body.Diplome, 20, `https://api.dicebear.com/5.x/open-peeps/svg?seed=${req.body.Nom}${req.body.Prenom}`];
+    db.run(sql, employe, err => {
         if (err) {
             return console.error(err.message);
         }
@@ -202,7 +375,7 @@ app.post("/create", (req, res) => {
 // GET /edit/5
 app.get("/edit/:id", (req, res) => {
     const id = req.params.id;
-    const sql = "SELECT * FROM Employes WHERE idEmployes = ?";
+    const sql = "SELECT * FROM Employes WHERE idEmploye = ?";
     db.get(sql, id, (err, row) => {
         if (err) {
             return console.error(err.message);
@@ -214,9 +387,9 @@ app.get("/edit/:id", (req, res) => {
 // POST /edit/5
 app.post("/edit/:id", (req, res) => {
     const id = req.params.id;
-    const book = [req.body.Titre, req.body.Auteur, req.body.Commentaires, id];
-    const sql = "UPDATE Livres SET Titre = ?, Auteur = ?, Commentaires = ? WHERE (Livre_ID = ?)";
-    db.run(sql, book, err => {
+    const employes = [req.body.Nom, req.body.Prenom, req.body.Adresse, req.body.NumeroSecuSociale, req.body.Diplome, id];
+    const sql = "UPDATE Employes SET Nom = ?, Prénom = ?, Adresse= ?,  NumeroSecuSociale = ?, Diplome = ? WHERE (idEmploye = ?)";
+    db.run(sql, employes, err => {
         if (err) {
             return console.error(err.message);
         }

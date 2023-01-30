@@ -1,39 +1,68 @@
 <%- include("_header") -%>
 
-<h1>Liste des Employés (<%= model.length %>)</h1>
+  <h1>Liste des Employés (<%= all %>)</h1>
 
-<div class="table-responsive-sm">
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nom</th>
-        <th>Prenom</th>
-        <th>Adresse</th>
-        <th>NumeroSecuSociale</th>
-        <th>idPoste</th>
-        <th class="d-print-none">
-          <a class="btn btn-sm btn-success" href="/create">Ajouter</a>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <% for (const employe of model) { %>
+  <!-- Search Bar Name -->
+  <form action="/employes" method="GET">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Rechercher par nom" name="search" value="<%= search %>">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Rechercher</button>
+      </div>
+    </div>
+
+  <div class="table-responsive-sm">
+    <table class="table table-hover">
+      <thead>
         <tr>
-          <td><%= employe.idEmploye %></td>
-          <td><%= employe.Nom %></td>
-          <td><%= employe.Prenom %></td>
-          <td><%= employe.Adresse %></td>
-          <td><%= employe.NumeroSecuSociale %></td>
-          <td><%= employe.idPoste %></td>
-          <td class="d-print-none">
-            <a class="btn btn-sm btn-warning" href="/edit/<%= employe.idEmploye %>">Modifier</a>
-            <a class="btn btn-sm btn-danger" href="/delete/<%= employe.idEmploye %>">Effacer</a>
-          </td>
+          <th>Avatar</th>
+          <th>Nom</th>
+          <th>Prenom</th>
+          <th>Adresse</th>
+          <th>NumeroSecuSociale</th>
+          <th>idPoste</th>
+          <th class="d-print-none">
+            <a class="btn btn-sm btn-success" href="/create">Ajouter</a>
+          </th>
         </tr>
-      <% } %>
-    </tbody>
-  </table>
-</div>
+      </thead>
+      <tbody>
+        <% for (const employe of model) { %>
+          <tr>
+            <td><img src="<%= employe.Avatar %>" alt="" srcset=""></td>
+            <td>
+              <%= employe.Nom %>
+            </td>
+            <td>
+              <%= employe.Prénom %>
+            </td>
+            <td>
+              <%= employe.Adresse %>
+            </td>
+            <td>
+              <%= employe.NumeroSecuSociale %>
+            </td>
+            <td>
+              <%= employe.idPoste %>
+            </td>
+            <td class="d-print-none">
+              <a class="btn btn-sm btn-warning" href="/edit/<%= employe.idEmploye %>">Modifier</a>
+              <a class="btn btn-sm btn-danger" href="/delete/<%= employe.idEmploye %>">Virer</a>
+            </td>
+          </tr>
+          <% } %>
+      </tbody>
+    </table>
+  </div>
 
-<%- include("_footer") -%>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <li class="page-item"><a class="page-link" href="/employes?limit=<%= limit %>&offset=<%= offset - limit%>">Previous</a></li>
+      <% for (let i = 1; i <= all / limit; i++) { %>
+        <li class="page-item"><a class="page-link" href="/employes?limit=<%= limit %>&offset=<%= (i-1) * limit %>"><%= i %></a></li>
+        <% } %>
+      <li class="page-item"><a class="page-link" href="/employes?limit=<%= limit %>&offset=<%= offset*1 + limit*1 %>">Next</a></li>
+    </ul>
+  </nav>
+
+  <%- include("_footer") -%>
