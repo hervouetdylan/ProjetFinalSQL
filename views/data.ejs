@@ -1,13 +1,63 @@
 <%- include("_header") -%>
 
-<h1><%= model.titre %></h1>
+  <div>
+    <canvas id="myChart"></canvas>
+    <canvas id="myChart2"></canvas>
+    <input type="hidden" id="label" value="<%= label %>">
+    <input type="hidden" id="datavar" value="<%= data %>">
+  </div>
 
-<ul>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <% for (let i = 0; i < model.items.length; i++) { %>
-    <li><%= model.items[i] %></li>
-  <% } %>
+  <script>
+    var label = document.getElementById("label").value.split(",");
+    var datavar = document.getElementById("datavar").value.split(",");
+    
 
-</ul>
+    const ctx = document.getElementById('myChart');
+    const ctx2 = document.getElementById('myChart2');
 
-<%- include("_footer") -%>
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: label,
+        datasets: [{
+          label: 'Nombre d\'employés par département',
+          data: datavar,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    new Chart(ctx2, {
+      type: 'doughnut',
+      data: {
+        labels: label,
+        datasets: [{
+          label: 'Nombre d\'employés par département',
+          data: datavar,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+
+
+  </script>
+
+
+  <%- include("_footer") -%>

@@ -324,11 +324,21 @@ app.get("/about", (req, res) => {
 
 // GET /data
 app.get("/data", (req, res) => {
-    const test = {
-        titre: "Test",
-        items: ["un", "deux", "trois"]
-    };
-    res.render("data", { model: test });
+    const sql = `SELECT COUNT(*) AS NbEmployes, poste.labdepartement as Departement FROM Employes INNER JOIN (SELECT poste.id AS idPoste, poste.label AS labposte, departement.label AS labdepartement FROM Poste INNER JOIN Departement ON Poste.idDepartement = Departement.id) AS poste 
+    ON Employes.idPoste = poste.idPoste GROUP BY Departement`;
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            throw err;
+        }
+        const label = rows.map(row => { return row.Departement });
+        const data = rows.map(row => { return row.NbEmployes });
+
+        console.log(label);
+        console.log(data);
+
+
+        res.render("data", { label : label, data : data });
+    });
 });
 
 // GET /employes
