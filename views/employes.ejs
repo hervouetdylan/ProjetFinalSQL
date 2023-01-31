@@ -1,30 +1,17 @@
 <%- include("_header") -%>
 
   <h1>Liste des Employés (<%= all %>)</h1>
-
-  <form action="/search" method="POST" class="form-inline my-2 my-lg-0">
-    <label for="sorting">Sort by : </label>
-    <select name="sorting" id="sort">
-      <option value="Nom">Nom</option>
-      <option value="Prénom">Prénom</option>
-      <option value="Adresse">Adresse</option>
-      <option value="NumeroSecuSociale">NumeroSecuSociale</option>
-      <option value="Poste">Poste</option>
-      <option value="Departement">Departement</option>
-    </select>
-  </form>
-
   <div class="table-responsive-sm">
-    <table class="table table-hover">
+    <table class="table table-hover " id="employesTable">
       <thead>
         <tr>
           <th>Avatar</th>
-          <th>Nom</th>
-          <th>Prenom</th>
-          <th>Adresse</th>
-          <th>NumeroSecuSociale</th>
-          <th>Poste</th>
-          <th>Departement</th>
+          <th onclick="sortTable(0)">Nom</th>
+          <th onclick="sortTable(1)">Prenom</th>
+          <th onclick="sortTable(2)">Adresse</th>
+          <th onclick="sortTable(3)">NumeroSecuSociale</th>
+          <th onclick="sortTable(4)">Poste</th>
+          <th onclick="sortTable(5)">Departement</th>
           <th class="d-print-none">
             <a class="btn btn-sm btn-success" href="/create">Ajouter</a>
           </th>
@@ -62,6 +49,6 @@
     </table>
   </div>
 
-
-
   <%- include("_footer") -%>
+
+  <script src="js/employes.js"></script>
