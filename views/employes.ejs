@@ -2,14 +2,17 @@
 
   <h1>Liste des Employés (<%= all %>)</h1>
 
-  <!-- Search Bar Name -->
-  <form action="/employes" method="GET">
-    <div class="input-group mb-3">
-      <input type="text" class="form-control" placeholder="Rechercher par nom" name="search" value="<%= search %>">
-      <div class="input-group-append">
-        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Rechercher</button>
-      </div>
-    </div>
+  <form action="/search" method="POST" class="form-inline my-2 my-lg-0">
+    <label for="sorting">Sort by : </label>
+    <select name="sorting" id="sort">
+      <option value="Nom">Nom</option>
+      <option value="Prénom">Prénom</option>
+      <option value="Adresse">Adresse</option>
+      <option value="NumeroSecuSociale">NumeroSecuSociale</option>
+      <option value="Poste">Poste</option>
+      <option value="Departement">Departement</option>
+    </select>
+  </form>
 
   <div class="table-responsive-sm">
     <table class="table table-hover">
@@ -20,7 +23,8 @@
           <th>Prenom</th>
           <th>Adresse</th>
           <th>NumeroSecuSociale</th>
-          <th>idPoste</th>
+          <th>Poste</th>
+          <th>Departement</th>
           <th class="d-print-none">
             <a class="btn btn-sm btn-success" href="/create">Ajouter</a>
           </th>
@@ -43,7 +47,10 @@
               <%= employe.NumeroSecuSociale %>
             </td>
             <td>
-              <%= employe.idPoste %>
+              <%= employe.Poste %>
+            </td>
+            <td>
+              <%= employe.Departement %>
             </td>
             <td class="d-print-none">
               <a class="btn btn-sm btn-warning" href="/edit/<%= employe.idEmploye %>">Modifier</a>
@@ -55,14 +62,6 @@
     </table>
   </div>
 
-  <nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-center">
-      <li class="page-item"><a class="page-link" href="/employes?limit=<%= limit %>&offset=<%= offset - limit%>">Previous</a></li>
-      <% for (let i = 1; i <= all / limit; i++) { %>
-        <li class="page-item"><a class="page-link" href="/employes?limit=<%= limit %>&offset=<%= (i-1) * limit %>"><%= i %></a></li>
-        <% } %>
-      <li class="page-item"><a class="page-link" href="/employes?limit=<%= limit %>&offset=<%= offset*1 + limit*1 %>">Next</a></li>
-    </ul>
-  </nav>
+
 
   <%- include("_footer") -%>

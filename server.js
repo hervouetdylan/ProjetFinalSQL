@@ -24,7 +24,6 @@ const db = new sqlite3.Database(db_name, err => {
     console.log("Connexion réussie à la base de données 'data.db'");
 });
 
-
 const sql_create = `CREATE TABLE IF NOT EXISTS Departement (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     label VARCHAR(100) UNIQUE NOT NULL
@@ -334,36 +333,38 @@ app.get("/data", (req, res) => {
 
 // GET /employes
 app.get("/employes", (req, res) => {
-    const search = req.query.search || "";
-    const sql = `SELECT COUNT(*) AS Total FROM employes Where Nom LIKE '%${search}%' OR Prénom LIKE '%${search}%'`;
+    const sql = `SELECT COUNT(*) AS Total FROM employes`;
     db.get(sql, [], (err, row) => {
         if (err) {
             return console.error(err.message);
         }
-        const limit = req.query.limit || 5;
-        var offset = req.query.offset || 0;
-        if (offset >= row.Total) {
-            offset = row.Total - limit;
-        }
-        const sql = `SELECT '${avatarLink}' || Prénom AS Avatar, Nom, Prénom, Adresse, NumeroSecuSociale, Diplome FROM employes Where Nom LIKE '%${search}%' OR Prénom LIKE '%${search}%' ORDER BY idEmploye LIMIT ${limit} OFFSET ${offset}`;
+        const sql = `SELECT '${avatarLink}' || Prénom AS Avatar, Nom, Prénom, Adresse, NumeroSecuSociale, Diplome, poste.labposte as Poste, poste.labdepartement as Departement 
+        FROM Employes INNER JOIN (SELECT poste.id AS idPoste, poste.label AS labposte, departement.label AS labdepartement FROM Poste INNER JOIN Departement ON Poste.idDepartement = Departement.id) AS poste ON Employes.idPoste = poste.idPoste`;
         db.all(sql, [], (err, rows) => {
             if (err) {
                 return console.error(err.message);
             }
-            res.render("employes", { model: rows, limit: limit, offset: offset, all: row.Total, search: search });
+            res.render("employes", { model: rows, all: row.Total });
         });
     });
 });
 
+
 // GET /create
 app.get("/create", (req, res) => {
-    res.render("create", { model: {} });
+    const sql = `SELECT Poste.id As idPoste, Poste.label AS labposte, Departement.label AS labdep FROM Poste INNER JOIN Departement ON Poste.idDepartement = Departement.id`;
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            return console.error(err.message);
+        }
+        res.render("create", { model: {}, postes: rows });
+    })
 });
 
 // POST /create
 app.post("/create", (req, res) => {
-    const sql = "INSERT INTO employes (Nom, Prénom, Adresse, NumeroSecuSociale, Diplome, idPoste, avatarLink) VALUES (?,?,?,?,?,?,?)";
-    const employe = [req.body.Nom, req.body.Prenom, req.body.Adresse, req.body.NumeroSecuSociale, req.body.Diplome, 20, `https://api.dicebear.com/5.x/open-peeps/svg?seed=${req.body.Nom}${req.body.Prenom}`];
+    const sql = "INSERT INTO employes (Nom, Prénom, Adresse, NumeroSecuSociale, Diplome, idPoste) VALUES (?,?,?,?,?,?)";
+    const employe = [req.body.Nom, req.body.Prenom, req.body.Adresse, req.body.NumeroSecuSociale, req.body.Diplome, req.body.Poste];
     db.run(sql, employe, err => {
         if (err) {
             return console.error(err.message);

@@ -1,0 +1,10 @@
+<div class="form-group row">
+    <label class="col-form-label col-sm-2" for="Poste">Poste occupée :</label>
+    <div class="col-sm-7">
+        <select class="form-control" name="Poste" id="poste">
+            <% for (const poste of postes) { %>
+                <option value="<%= poste.idPoste %>"><%= poste.labposte %></option>
+            <% } %>
+        </select>
+    </div>
+</div>
