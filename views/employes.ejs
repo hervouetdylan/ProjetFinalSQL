@@ -1,17 +1,23 @@
 <%- include("_header") -%>
 
   <h1>Liste des Employés (<%= all %>)</h1>
+
+  <!-- JS Dynamic Search Bar -->
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Rechercher un employé" id="searchBar">
+  </div>
+
   <div class="table-responsive-sm">
     <table class="table table-hover " id="employesTable">
       <thead>
         <tr>
           <th>Avatar</th>
-          <th onclick="sortTable(0)">Nom</th>
-          <th onclick="sortTable(1)">Prenom</th>
-          <th onclick="sortTable(2)">Adresse</th>
-          <th onclick="sortTable(3)">NumeroSecuSociale</th>
-          <th onclick="sortTable(4)">Poste</th>
-          <th onclick="sortTable(5)">Departement</th>
+          <th onclick="sortTable(1)">Nom</th>
+          <th onclick="sortTable(2)">Prenom</th>
+          <th onclick="sortTable(3)">Adresse</th>
+          <th onclick="sortTable(4)">NumeroSecuSociale</th>
+          <th onclick="sortTable(5)">Poste</th>
+          <th onclick="sortTable(6)">Departement</th>
           <th class="d-print-none">
             <a class="btn btn-sm btn-success" href="/create">Ajouter</a>
           </th>
@@ -51,4 +57,4 @@
 
   <%- include("_footer") -%>
 
-  <script src="js/employes.js"></script>
+    <script src="js/employes.js"></script>
