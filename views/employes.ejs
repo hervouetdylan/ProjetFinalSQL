@@ -1,0 +1,60 @@
+<%- include("_header") -%>
+
+  <h1>Liste des Employés (<%= all %>)</h1>
+
+  <!-- JS Dynamic Search Bar -->
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Rechercher un employé" id="searchBar">
+  </div>
+
+  <div class="table-responsive-sm">
+    <table class="table table-hover " id="employesTable">
+      <thead>
+        <tr>
+          <th>Avatar</th>
+          <th onclick="sortTable(1)">Nom</th>
+          <th onclick="sortTable(2)">Prenom</th>
+          <th onclick="sortTable(3)">Adresse</th>
+          <th onclick="sortTable(4)">NumeroSecuSociale</th>
+          <th onclick="sortTable(5)">Poste</th>
+          <th onclick="sortTable(6)">Departement</th>
+          <th class="d-print-none">
+            <a class="btn btn-sm btn-success" href="/create">Ajouter</a>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (const employe of model) { %>
+          <tr>
+            <td><img src="<%= employe.Avatar %>" alt="" srcset=""></td>
+            <td>
+              <%= employe.Nom %>
+            </td>
+            <td>
+              <%= employe.Prénom %>
+            </td>
+            <td>
+              <%= employe.Adresse %>
+            </td>
+            <td>
+              <%= employe.NumeroSecuSociale %>
+            </td>
+            <td>
+              <%= employe.Poste %>
+            </td>
+            <td>
+              <%= employe.Departement %>
+            </td>
+            <td class="d-print-none">
+              <a class="btn btn-sm btn-warning" href="/edit/<%= employe.idEmploye %>">Modifier</a>
+              <a class="btn btn-sm btn-danger" href="/delete/<%= employe.idEmploye %>">Virer</a>
+            </td>
+          </tr>
+          <% } %>
+      </tbody>
+    </table>
+  </div>
+
+  <%- include("_footer") -%>
+
+    <script src="js/employes.js"></script>

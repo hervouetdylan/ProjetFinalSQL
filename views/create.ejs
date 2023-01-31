@@ -1,0 +1,53 @@
+<%- include("_header") -%>
+
+  <h1>Ajouter une fiche</h1>
+
+  <form action="/create" method="post">
+    <div class="form-horizontal box1 ">
+
+      <%- include("_editor1") -%>
+
+        <div class="form-group row">
+          <label class="col-form-label col-sm-2"></label>
+          <div class="col-sm-10">
+            <a class="btn btn-success check1">Suivant </a>
+            <a class="btn btn-outline-dark cancel" href="/employes">Annuler</a>
+          </div>
+        </div>
+    </div>
+
+    <div class="form-horizontal box2 d-none">
+
+      <%- include("_editor2") -%>
+
+        <div class="form-group row">
+          <label class="col-form-label col-sm-2"></label>
+          <div class="col-sm-10">
+            <a class="btn btn-success check2">Suivant</a>
+            <a class="btn btn-outline-dark cancel check1">Retour</a>
+          </div>
+        </div>
+    </div>
+
+    <div class="form-horizontal box3 d-none">
+
+      <label for="text">Appartient au Departement :</label>
+      <% for (const poste of postes) { %>
+        <input class="form-control d-none departement" type="text" value="<%= poste.labdep %>" id="<%= poste.idPoste %>"
+          disabled readonly>
+        <% } %>
+
+          <div class="form-group row">
+            <label class="col-form-label col-sm-2"></label>
+            <div class="col-sm-10">
+              <input type="submit" value="Confirmer" class="btn btn-default btn-success" />
+              <a class="btn btn-outline-dark cancel check2">Retour</a>
+            </div>
+          </div>
+    </div>
+
+  </form>
+
+  <%- include("_footer") -%>
+
+    <script src="js/create.js"></script>
